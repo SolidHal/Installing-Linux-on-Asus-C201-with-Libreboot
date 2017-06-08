@@ -1,0 +1,176 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red255\green255\blue255;\red0\green0\blue0;\red0\green0\blue233;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sl740\qr\partightenfactor0
+
+\f0\fs64 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 June 6, 2015\
+\pard\pardeftab720\sl460\partightenfactor0
+
+\b\fs40 \cf3 \cb1 \strokec3 To crouton, or not to crouton?\
+\pard\pardeftab720\li287\ri287\sl360\sa287\partightenfactor0
+
+\b0\fs32 \cf3 Okay, new chromebook time! The Asus C201 is just like my old one, basically.\
+Crouton (Debian in chroot under chromeos) appears to be more of a path-well-travelled now, so I'm going to try it first. I see a few big upsides:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl360\partightenfactor0
+\ls1\ilvl0\cf3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 Almost impossible to brick device\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 Don't have to mess with bootloader\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 Don't necessarily have to mess with kernel\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 Don't necessarily have to mess with suspend/resume\
+\pard\pardeftab720\li287\ri287\sl360\sa287\partightenfactor0
+\cf3 And some downsides:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\sl360\partightenfactor0
+\ls2\ilvl0\cf3 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 Probably have to build kernel modules for NFS and VPN.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 May never win the battle to run X11 under crouton.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 May never win the battle to run mplayer under crouton.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 May never win the battle to run stellarium under crouton.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\'95	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec3 May have to learn something about ChromeOS.\
+\pard\pardeftab720\li287\ri287\sl360\sa287\partightenfactor0
+\cf3 I'm especially afraid of learning about ChromeOS. If I can tell it's there, it's probably not worth it. OTOH, it would be nice to have real flash player when I need it??? I don't think so...\
+The fact of the matter is, I don't want it. But I've made it this far, so I'm gonna see if I can resolve those questions. Though I must point out that chrome is using 300MB just showing these two terminal sessions. But 300MB doesn't matter. I guess.\
+Building some kernel modules using the sources at 
+\f1 git clone https://chromium.googlesource.com/chromiumos/third_party/kernel
+\f0 . I checked out branch 
+\f1 release-R43-6946.B-chromeos-3.14
+\f0  (because that's what my chromeos is). I ran 
+\f1 ./chromeos/scripts/prepareconfig chromiumos-rockchip
+\f0 , then 
+\f1 make menuconfig
+\f0  to enable NFS.\
+I have come to the dreaded 
+\f1 Chromium OS LSM: init_module denied
+\f0  while trying to install NFS modules into the ChromeOS kernel. Down with Chrome OS!\
+I built the full kernel under the crouton environment. I got a debian initrd from {\field{\*\fldinst{HYPERLINK "ftp://ftp.us.debian.org/debian/dists/unstable/main/installer-armhf/current/images/netboot/initrd.gz"}}{\fldrslt \cf4 \ul \ulc4 \strokec4 ftp://ftp.us.debian.org/debian/dists/unstable/main/installer-armhf/current/images/netboot/initrd.gz}}. I extracted it with 
+\f1 zcat initrd.gz | cpio -i
+\f0  on a microsd card that I configured, again according to {\field{\*\fldinst{HYPERLINK "http://blogs.arm.com/software-enablement/848-running-linux-on-the-series-3-chromebook/"}}{\fldrslt \cf4 \ul \ulc4 \strokec4 the directions from Andrew Wafaa}}. I had to remember to run 
+\f1 cgpt add -i 1 -S 1 -P 10 -T 5 /dev/mmcblk1
+\f0  when done installing the kernel in 
+\f1 /dev/mmcblk1p1
+\f0 .\
+Building the kernel was a little more work than I remember, and I'm not precisely following Olof's directions anymore... I ran 
+\f1 make bzImage
+\f0 , and 
+\f1 make modules
+\f0 , then 
+\f1 make dtbs
+\f0 . Then I used this 
+\f1 kernel.its
+\f0 :\
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f1 \cf3 /dts-v1/;\
+\
+/ \{\
+    description = "Chrome OS kernel image with one or more FDT blobs";\
+    #address-cells = <1>;\
+    images \{\
+        kernel@1\{\
+            description = "kernel";\
+            data = /incbin/("arch/arm/boot/zImage");\
+            type = "kernel_noload";\
+            arch = "arm";\
+            os = "linux";\
+            compression = "none";\
+            load = <0>;\
+            entry = <0>;\
+        \};\
+        fdt@1\{\
+            description = "rk3288-speedy.dtb";\
+            data = /incbin/("arch/arm/boot/dts/rk3288-speedy.dtb");\
+            type = "flat_dt";\
+            arch = "arm";\
+            compression = "none";\
+            hash@1\{\
+                algo = "sha1";\
+            \};\
+        \};\
+    \};\
+    configurations \{\
+        default = "conf@1";\
+        conf@1\{\
+            kernel = "kernel@1";\
+            fdt = "fdt@1";\
+        \};\
+    \};\
+\};\
+\pard\pardeftab720\li287\ri287\sl360\sa287\partightenfactor0
+
+\f0 \cf3 Then I ran:\
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f1 \cf3 mkimage -f kernel.its kernel.itb\
+echo "console=tty1 debug root=/dev/mmcblk1p3 rw rootwait" > config.txt\
+vbutil_kernel --pack kernel.signed \\\
+      --keyblock /usr/share/vboot/devkeys/kernel.keyblock \\\
+      --version 1 \\\
+      --signprivate /usr/share/vboot/devkeys/kernel_data_key.vbprivk \\\
+      --config config.txt --vmlinuz kernel.itb --arch arm\
+\pard\pardeftab720\li287\ri287\sl360\sa287\partightenfactor0
+
+\f0 \cf3 That's kind of tedious but still pretty straightforward. Then I booted on the microsd, knock on wood.\
+Apparently I have to edit Debian's 
+\f1 /sbin/init
+\f0 . Change the tmpfs size to 200MB:\
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f1 \cf3 if mount -t tmpfs -o size=200M tmpfs /mnt ; then\
+\pard\pardeftab720\li287\ri287\sl360\sa287\partightenfactor0
+
+\f0 \cf3 And, yuck, before running 
+\f1 make modules bzImage
+\f0 , I apparently have to run 
+\f1 export WIFIVERSION=-3.8
+\f0  (the native 3.14 
+\f1 brcmfmac
+\f0  driver doesn't seem to be maintained as actively as the one in 
+\f1 wireless-3.8
+\f0 .\
+And thankfully, after all that, the debian installer doesn't really give any trouble. I don't have to manually configure the wifi or anything like that. I did the same process as last time of installing on the SD card, verifying that wlan works, and then copying to the internal storage. This time I was a little bolder and re-partitioned to use ROOT-A, ROOT-B, and STATE as one big partition (14.5GB). I did preserve all of the other partitions because I don't actually know (or care) how vboot works.\
+So....I did get utility out of the crouton install, it let me rebuild my kernel without futzing with cross compilers. The laptop is "very slow", but that means it took 15 minutes to build kernel+modules. When I was a kid, it took 30 minutes just to build a tiny 1.2.13 kernel. So not bad.\
+I copied over the UCM files (
+\f1 /usr/share/alsa/ucm
+\f0 ), and I initialized sound with 
+\f1 alsaucm -c ROCKCHIP-I2S set _verb HiFi
+\f0 . Then the 
+\f1 amixer set Speaker
+\f0  control works.\
+The wifi driver (
+\f1 brcmfmac
+\f0 ) isn't super reliable, and never comes back after suspend. And the webcam (
+\f1 /dev/video2
+\f0 ) always reports itself as busy. And mplayer installed a crap AVI codec. But alsa, X11, firefox, nfs, vpn all work just fine. I'm most of the way there. But the wifi problems are going to reduce my productivity...\
+...\
+Okay, this is pretty much all I've done all day, but I figured out why 
+\f1 brcmfmac
+\f0  wasn't suspending reliably. Long story short, you need to copy over 
+\f1 /etc/modprobe.d/blacklist-btsdio.conf
+\f0  from ChromeOS. It contains:\
+\pard\pardeftab720\sl360\partightenfactor0
+
+\f1 \cf3 blacklist btsdio\
+\pard\pardeftab720\li287\ri287\sl360\sa287\partightenfactor0
+
+\f0 \cf3 If I were Google or Asus, I would have just not shipped btsdio with the kernel config for this laptop. But anyways, if btsdio (the generic bluetooth-over-SDIO) driver gets loaded, then it attaches to the same internal MMC slot as the wifi (both are in one chip), and the generic driver doesn't support power management so it removes it instead of suspending it, and then it never adds it back! I feel like the amount of effort to figure this out is a failure in Linux's MMC layer. *sigh*\
+To that end, {\field{\*\fldinst{HYPERLINK "https://lkml.org/lkml/2015/6/8/270"}}{\fldrslt \cf4 \ul \ulc4 \strokec4 here's a patch}} I submitted to LKML that would have made a useful error message here and saved me about 6 hours. Of course, if you're reading this you already know the punchline (blacklist btsdio).\
+If you actually want bluetooth, there's a fairly straightforward process to get a brcm firmware loader for the bluetooth, which does seem to work...but I'll never actually use it.\
+The webcam seems to not wake up until it is opened, which is why it always says it is busy. It seems to simply work to start it twice. It's worth noting it seems to show up as 
+\f1 /dev/video2
+\f0  due to some bogus v4l devices that are created for hardware codecs??\
+So I just have to figure out the mplayer codec problem and I'm in business!\
+And mplayer seems to be just pickier about a few marginal videos. So that's that -- it's my new laptop now. That wasn't so bad, was it?\
+}

@@ -1,0 +1,10 @@
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install gdebi-core
+sudo apt-get install libwebkitgtk-3.0-0
+wget http://steinerdatenbank.de/software/ghb_0.10.5-1_armhf.deb
+sudo gdebi ghb_0.10.5-1_armhf.deb
+
+the gui client is installed to /usr/bin under the name ghb
+the cli is HandBrakeCLI
+If there is a dependency missing, ghb will exit quietly
